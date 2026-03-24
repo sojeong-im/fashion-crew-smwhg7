@@ -1,22 +1,31 @@
 // Firebase Configuration
-// Project: smwhg7
-
+// New Project: fashion-crew-form
 const firebaseConfig = {
-    apiKey: "AIzaSyDKVKTxpYeogUBm51E5B7h9jD2auBAJfMg",
-    authDomain: "smwhg7.firebaseapp.com",
-    projectId: "smwhg7",
-    storageBucket: "smwhg7.firebasestorage.app",
-    messagingSenderId: "539761228990",
-    appId: "1:539761228990:web:ec5e7c29b36493d28132ef",
-    measurementId: "G-JG201GG6BQ"
+    apiKey: "AIzaSyDJf2no17murmqBQwsQTPka0CVaec3Zrdw",
+    authDomain: "fashion-crew-form.firebaseapp.com",
+    projectId: "fashion-crew-form",
+    storageBucket: "fashion-crew-form.firebasestorage.app",
+    messagingSenderId: "305126388776",
+    appId: "1:305126388776:web:4a4fdad52e39394d2ff11d",
+    measurementId: "G-1TG4J16RVD"
 };
 
-// Firebase 초기화
-firebase.initializeApp(firebaseConfig);
+// Firebase 초기화 확인
+console.log('Firebase initializing for project: fashion-crew-form');
 
-// Firestore 및 Auth 인스턴스
-const db = firebase.firestore();
-// const auth = firebase.auth(); // Auth 사용 안함
-
-// 컬렉션 이름
-const APPLICATIONS_COLLECTION = 'applications';
+if (typeof firebase === 'undefined') {
+    console.error('Firebase SDK not loaded! Check your script tags.');
+} else {
+    firebase.initializeApp(firebaseConfig);
+    
+    // Firestore 인스턴스 생성 및 설정
+    const db = firebase.firestore();
+    
+    // 네트워크 연결 방식 강제 설정 (Hanging 방지)
+    db.settings({ experimentalForceLongPolling: true });
+    console.log('Firestore initialized with Long Polling enabled.');
+    
+    // 전역 변수로 할당 (다른 스크립트에서 사용 가능)
+    window.db = db;
+    window.APPLICATIONS_COLLECTION = 'applications';
+}
