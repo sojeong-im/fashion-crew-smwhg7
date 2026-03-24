@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /applications/{document} {
+      // 1. 지원서 제출: 누구나 가능
+      allow create: if true;
+      
+      // 2. 관리자 조회/수정: 인증된 관리자만 가능
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+Disallow: /admin.html
+
+Sitemap: https://smwhg7.netlify.app/sitemap.xml
