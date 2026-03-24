@@ -776,11 +776,22 @@
             submitBtn.disabled = true;
             submitBtn.textContent = '제출 중...';
 
-            try {
-                // Firestore에 데이터 저장
-                await db.collection('applications').add(formData);
+            console.log('Starting submission to Firestore...', formData);
 
-                console.log('Application submitted:', formData);
+            try {
+                // 네트워크 문제 해결을 위한 설정 (Long Polling 강제)
+                try {
+                    db.settings({ experimentalForceLongPolling: true });
+                    console.log('Long Polling enabled.');
+                } catch (e) {
+                    console.warn('Settings could not be applied (maybe already initialized):', e);
+                }
+
+                // Firestore에 데이터 저장
+                const docRef = await db.collection('applications').add(formData);
+                console.log('Document written with ID: ', docRef.id);
+
+                console.log('Application submitted successfully:', formData);
 
                 // 폼 숨김
                 form.style.display = 'none';
